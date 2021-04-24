@@ -50,6 +50,14 @@ app.app_context().push()
 def index():
   return render_template('app.html')
 
+@app.route('/login')
+def login():
+  return render_template('login.html')
+
+@app.route('/signup')
+def signup():
+    return render_template('signup.html')
+
 @app.route('/app')
 def client_app():
   return app.send_static_file('app.html')
