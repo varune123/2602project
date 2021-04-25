@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from datetime import timedelta 
 
 
-from models import db, Exercise, User, SignUp, Routines,LogIn #add application models
+from models import db, Exercise, User, SignUp, Routines, LogIn #add application models
 
 ''' Begin boilerplate code '''
 
@@ -22,7 +22,7 @@ def load_user(user_id):
 def create_app():
   app = Flask(__name__, static_url_path='')
   app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-  app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+  app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
   app.config['SECRET_KEY'] = "MYSECRET"
   app.config['JWT_EXPIRATION_DELTA'] = timedelta(days = 7) # uncomment if using flsk jwt
   CORS(app)
