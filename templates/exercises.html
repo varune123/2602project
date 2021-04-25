@@ -8,16 +8,34 @@
    <h1>Exercise list is as follows:</h1>
 <table>
     <thead>
-        <th>ID </th>
-        <th>ID Number</th>
-        <th>Date</th>
-        <th>Stream</th>
-        <th>Actions</th>
+        <th>Exercise Name</th>
+        <th>Difficulty</th>
+        <th>Description</th>
+        <th>Equipment</th>
+        <th>Primary muscle affected</th>
+        <th>Secondaru muscle affected</th>
     </thead>
     <tbody>
         {% for row in exerciseList %}
             <tr>
                 <td>{{row.name}}</td>
+                <td>{{row.difficulty}}</td>
+                <td>{{row.description}}</td>
+                <td>
+                    {% if row.equipment == 'null' %}
+                        {{"-"}}
+                    {% else %}
+                        {{row.equipment}}
+                    {% endif %}
+                </td>
+                <td>{{row.primary_muscle}}</td>
+                <td>
+                    {% if row.secondary_muscle == 'null' %}
+                        {{"-"}}
+                    {% else %}
+                        {{row.secondary_muscle}}
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
     </tbody>
