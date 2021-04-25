@@ -1,0 +1,18 @@
+body{
+  background-color: #f2f2f2;
+  padding-top: 30px;
+  height: 100px;
+  background-image: url("gym.jpg");
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.home {
+  background-image: url("gym.jpg");
+  opacity:0.90;
+  background-position:center;
+  background-repeat:no-repeat;
+  min-height:600px;
+  padding-top:200px;
+  padding-bottom:200px;
+}
