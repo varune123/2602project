@@ -6,7 +6,9 @@
 
 {% block content %}
    <div class="row">
-      
+    {% if current_user.is_authenticated %}
+        <meta http-equiv="Refresh" content="0; url='/home'" />
+    {% else %}
         <form class="col s12 m8 offset-m2" method="POST" action="/login">
             {{ form.csrf_token }}
 
@@ -24,6 +26,6 @@
               {{form.submit}}
             </div> 
         </form>
-      
+    {% endif %}
   </div>
 {% endblock %}

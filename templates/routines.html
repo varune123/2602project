@@ -1,23 +1,19 @@
 {% extends "layout.html" %}
-{% block title %}Exercises{% endblock %}
-{% block page %}Exercises{% endblock %}
+{% block title %}Routines{% endblock %}
+{% block page %}Routines{% endblock %}
 <!--create search bar and filter-->
 {{ super() }}
 
 {% block content %}
-   <h1>Exercise list is as follows:</h1>
 <table>
     <thead>
-        <th>Exercise Name</th>
-        <th>Difficulty</th>
-        <th>Description</th>
-        <th>Equipment</th>
-        <th>Primary muscle affected</th>
-        <th>Secondary muscle affected</th>
+        <th>Routine Name</th>
+        <th>Creator</th>
+        <th>Exercises</th>
     </thead>
     <tbody>
         {% if option==2 %}
-            {% for row in exerciseList %}
+            {% for row in routines %}
                 <tr>
                     <td>{{row.name}}</td>
                     <td>{{row.difficulty}}</td>
