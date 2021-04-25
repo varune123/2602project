@@ -1,13 +1,13 @@
 import json
 from flask_cors import CORS
-from flask_login import LoginManager, current_user, login_user, login_required
+from flask_login import LoginManager, current_user, login_user, login_required, logout_user
 from flask import Flask, request, render_template, redirect, flash, url_for, jsonify
 from flask_jwt import JWT, jwt_required, current_identity
 from sqlalchemy.exc import IntegrityError
 from datetime import timedelta 
 
 
-from models import db, Exercise, User, SignUp, LogIn #add application models
+from models import db, Exercise, User, SignUp, Routines,LogIn #add application models
 
 ''' Begin boilerplate code '''
 
@@ -26,12 +26,11 @@ def create_app():
   app.config['SECRET_KEY'] = "MYSECRET"
   app.config['JWT_EXPIRATION_DELTA'] = timedelta(days = 7) # uncomment if using flsk jwt
   CORS(app)
-#   login_manager.init_app(app) # uncomment if using flask login
+  login_manager.init_app(app) # uncomment if using flask login
   db.init_app(app)
   return app
 
-app = create_app()
-login_manager.init_app(app) 
+app = create_app() 
 
 app.app_context().push()
 
@@ -100,7 +99,31 @@ def home():
 def exercises():
     exerciseList = Exercise.query.all()
     exerciseList = [row.toDict() for row in exerciseList]
-    return render_template('exercises.html', exerciseList=exerciseList)
+    return render_template('exercises.html', exerciseList=exerciseList, option=2)
+
+@app.route('/exercises/<id>')
+@login_required
+def get_exercises(id):
+    exercise = Exercise.query.get(id)
+    exercise = exercise.toDict()
+    return render_template('exercises.html', exerciseList=exercise, option=1)
+
+@app.route('/routines')
+@login_required
+def get_routines():
+    routines= []
+    routines = Routines.query.all()
+    routines = routines.toDict()
+    return render_template('routines.html', routinesList=routines, option=2)
+
+@app.route('/myroutines')
+@login_required
+def get_myroutines():
+    routines= []
+    routines = Routines.query.get(current_user.id)
+    routines = routines.toDict()
+    return render_template('routines.html', routinesList=routines, option=1)
+
 
 @app.route('/logout', methods=['GET'])
 @login_required

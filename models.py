@@ -15,6 +15,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
+    routines = db.relationship('Routines', backref='user', lazy=True)
 
     def toDict(self):
         return {
@@ -40,6 +41,7 @@ class Exercise(db.Model):
     equipment= db.Column(db.String(100))
     primary_muscle= db.Column(db.String(100))
     secondary_muscle= db.Column(db.String(100))
+    routines = db.relationship('Routines', backref='exercise', lazy=True)
 
     def toDict(self):
         return {
@@ -50,7 +52,22 @@ class Exercise(db.Model):
             'equipment_needed': self.equipment_needed,
             'equipment': self.equipment,
             'primary_muscle': self.primary_muscle,
-            'secondary_muscle': self.secondary_muscle
+            'secondary_muscle': self.secondary_muscle,
+            'routines': self.routines
+        }
+
+class Routines(db.Model):
+    id= db.Column(db.Integer, primary_key=True)
+    name= db.Column(db.String(100), unique=True ,nullable=False) #name of routine
+    exerciseId= db.Column(db.Integer, db.ForeignKey('exercise.id'), nullable=False) #exercises saved in routine
+    userId= db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) #keep track of user that created routine
+
+    def toDict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'exerciseId': self.exerciseId,
+            'userId': self.userId
         }
 
 class SignUp(FlaskForm):
