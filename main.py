@@ -1,7 +1,7 @@
 import json
 from flask_cors import CORS
 from flask_login import LoginManager, current_user, login_user, login_required
-from flask import Flask, request, render_template, redirect, flash, url_for
+from flask import Flask, request, render_template, redirect, flash, url_for, jsonify
 from flask_jwt import JWT, jwt_required, current_identity
 from sqlalchemy.exc import IntegrityError
 from datetime import timedelta 
@@ -57,6 +57,12 @@ def login():
 @app.route('/signup')
 def signup():
     return render_template('signup.html')
+
+@app.route('/exercises')
+def exercises():
+    exerciseList = Exercise.query.all()
+    exerciseList = [row.toDict() for row in exerciseList]
+    return render_template('exercises.html', exerciseList=exerciseList)
 
 @app.route('/app')
 def client_app():

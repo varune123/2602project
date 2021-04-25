@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block title %}Exercises{% endblock %}
+{% block page %}Backend App{% endblock %}
+
+{{ super() }}
+
+{% block content %}
+   <h1>Exercise list is as follows:</h1>
+<table>
+    <thead>
+        <th>ID </th>
+        <th>ID Number</th>
+        <th>Date</th>
+        <th>Stream</th>
+        <th>Actions</th>
+    </thead>
+    <tbody>
+        {% for row in exerciseList %}
+            <tr>
+                <td>{{row.name}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
