@@ -57,18 +57,6 @@ def index():
   form = LogIn()
   return render_template('login.html', form=form)
 
-@app.route('/login', methods=['POST'])
-def loginAction():
-  form = LogIn()
-  if form.validate_on_submit(): # respond to form submission
-      data = request.form
-      user = User.query.filter_by(username = data['username']).first()
-      if user and user.check_password(data['password']): # check credentials
-        flash('Logged in successfully.') # send message to next page
-        login_user(user) # login the user
-        return redirect(url_for('home')) # redirect to main page if login successful
-  flash('Invalid credentials')
-  return redirect(url_for('index'))
 
 @app.route('/signup', methods=['GET'])
 def signup():
@@ -89,11 +77,37 @@ def signupAction():
     flash('Error invalid input!')
     return redirect(url_for('signup')) 
 
+@app.route('/login', methods=['POST'])
+def loginAction():
+  form = LogIn()
+  if form.validate_on_submit(): # respond to form submission
+      data = request.form
+      user = User.query.filter_by(username = data['username']).first()
+      if user and user.check_password(data['password']): # check credentials
+        flash('Logged in successfully.') # send message to next page
+        login_user(user) # login the user
+        return redirect(url_for('home')) # redirect to main page if login successful
+  flash('Invalid credentials')
+  return redirect(url_for('index'))
+
+@app.route('/home')
+@login_required
+def home():
+    return render_template('home.html')    
+
 @app.route('/exercises')
+@login_required
 def exercises():
     exerciseList = Exercise.query.all()
     exerciseList = [row.toDict() for row in exerciseList]
     return render_template('exercises.html', exerciseList=exerciseList)
+
+@app.route('/logout', methods=['GET'])
+@login_required
+def logout():
+  logout_user()
+  flash('Logged Out!')
+  return redirect(url_for('index')) 
 
 @app.route('/app')
 def client_app():

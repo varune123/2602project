@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+{% block page %}Home{% endblock %}
+
+{{ super() }}
+
+{% block content %}
+  {% if current_user.is_authenticated %}
+   <h3> Hi {{ current_user.username }}! </h3>
+   <a href="/myexercises">My Routines</a><br>
+   <a href="/routines">View routines of other gym members</a><br>
+   <a href="/exercises">Exercises List</a>
+  {% endif %}
+{% endblock %}

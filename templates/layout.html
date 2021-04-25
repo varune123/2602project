@@ -16,6 +16,11 @@
     <nav class="purple">
       <div class="nav-wrapper">
         <a href="#!" class="brand-logo center">{% block page %}{% endblock %}</a>
+        {% if current_user.is_authenticated %}
+          <ul class="right" style="margin-top: 10px">
+            <li><a class="waves-effect waves-light btn right" href="/logout">Logout</a></li>
+          </ul>
+        {% endif %}
       </div>
     </nav>
     
