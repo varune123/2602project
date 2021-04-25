@@ -1,23 +1,29 @@
-<html>
-<head>
-<title>Login</title>
-    <link rel="stylesheet" type="text/css" href="login.css">
-<body>
-    <div class="loginbox">
-    <img src="pic.png" class="avatar">
-        <h1>Login</h1>
-        <form>
-            <p>Username</p>
-            <input type="text" name="" placeholder="Enter Username">
-            <p>Password</p>
-            <input type="password" name="" placeholder="Enter Password">
-            <input type="submit" name="" value="Login">
-            <a href="#">Reset Password</a><br>
-            <a href="#">Sign Up Here</a>
-        </form>
-        
-    </div>
+{% extends "layout.html" %}
+{% block title %}Login{% endblock %}
+{% block page %}Login{% endblock %}
 
-</body>
-</head>
-</html>
+{{ super() }}
+
+{% block content %}
+   <div class="row">
+      
+        <form class="col s12 m8 offset-m2" method="POST" action="/login">
+            {{ form.csrf_token }}
+
+            <div class="input-field col s12 m8 offset-m2"> 
+              {{ form.username(size=20, class="validate") }}
+              {{ form.username.label }}
+            </div>
+
+            <div class="input-field col s12 m8 offset-m2">
+              {{ form.password(size=20, class="validate") }}
+              {{ form.password.label }}
+            </div>
+
+            <div class="input-field col s12 m8 offset-m2">
+              {{form.submit}}
+            </div> 
+        </form>
+      
+  </div>
+{% endblock %}

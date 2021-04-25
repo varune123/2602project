@@ -1,26 +1,39 @@
-<html>
-<head>
-<title>Signup</title>
-    <link rel="stylesheet" type="text/css" href="signup.css">
-<body>
-    <div class="loginbox">
-    <img src="pic.png" class="avatar">
-        <h1>Sign Up</h1>
-        <form>
-            <p>Username</p>
-            <input type="text" name="" placeholder="Enter Username">
-            <p>Email</p>
-            <input type="text" name="" placeholder="Enter Email">
-            <p>Password</p>
-            <input type="password" name="" placeholder="Enter Password">
-            <p>Retype Password</p>
-            <input type="password" name="" placeholder="Enter Password">
-            <input type="submit" name="" value="Signup">
-            <a href="#">Sign In Here</a>
-        </form>
-        
-    </div>
+{% extends "layout.html" %}
+{% block title %}Sign Up{% endblock %}
+{% block page %}Sign Up{% endblock %}
 
-</body>
-</head>
-</html>
+{{ super() }}
+
+{% block content %}
+ <div class="row">
+      <div class="row">
+        <form id="myForm" class="col s12 m8 offset-m2" method="POST" action="/signup">
+            {{ form.csrf_token }}
+
+            <div class="input-field col s12 m8 offset-m2"> 
+              {{ form.username(size=20, class="validate") }}
+              {{ form.username.label }}
+            </div>
+
+            <div class="input-field col s12 m8 offset-m2">
+              {{ form.email(size=50, class="validate") }}
+              {{ form.email.label }}
+            </div>
+
+            <div class="input-field col s12 m8 offset-m2">
+              {{ form.password(size=20, class="validate") }}
+              {{ form.password.label }}
+            </div>
+
+            <div class="input-field col s12 m8 offset-m2">
+              {{ form.confirm(size=20, class="validate") }}
+              {{ form.confirm.label }}
+            </div>
+
+            <div class="input-field col s12 m8 offset-m2">
+              {{form.submit}}
+            </div> 
+        </form>
+      </div>
+  </div>
+{% endblock %}
